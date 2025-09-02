@@ -61,6 +61,13 @@
       h2 { font-size: 1.2rem; }
       .text-box { font-size: 0.95rem; }
     }
+    /* 지도 컨테이너를 가로 100%, 세로는 가로 대비 비율로 반응형 */
+  #daumRoughmapContainer1756789529521 {
+    width: 100%;
+    height: 0;
+    padding-bottom: 50%; /* 가로 대비 세로 비율, 50% → 높이는 가로의 절반 */
+    position: relative;
+  }
   </style>
 </head>
 <body>
@@ -93,7 +100,7 @@
       "timestamp" : "1756789529521",
       "key" : "vm4uxs62eq5",
       "mapWidth" : "100%",   // 반응형
-      "mapHeight" : "300"    // 높이는 원하는 값으로 조정
+      "mapHeight" : "100%"    // 높이는 원하는 값으로 조정
     }).render();
   </script>
     <div class="text-box">
