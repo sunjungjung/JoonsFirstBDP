@@ -7,6 +7,8 @@
   <style>
     body {
       margin: 0;
+      height: 100%;
+      overflow: hidden;
       font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
       background: #f8f4ef;
       color: #333;
@@ -14,12 +16,19 @@
     }
     section.page {
       min-height: 100vh;
+      scroll-snap-align: start;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       padding: 2rem;
       box-sizing: border-box;
+    }
+    .container {
+      height: 100vh;
+      overflow-y: scroll;
+      scroll-snap-type: y mandatory;
+      scroll-behavior: smooth;
     }
     h1, h2 {
       font-family: 'Georgia', serif;
