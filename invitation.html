@@ -10,8 +10,7 @@
   integrity="sha384-l+xbElFSnPZ2rOaPrU//2FF5B4LB8FiX5q4fXYTlfcG4PGpMkE1vcL7kNXI6Cci0"
   crossorigin="anonymous"></script>
   <script>
-  // ⚠️ 반드시 본인 앱의 JavaScript 키로 교체
-  Kakao.init('e82930d17c7d24ac379e3428a3a601be');
+    Kakao.init('e82930d17c7d24ac379e3428a3a601be'); // 네 키
   </script>
   <style>
     body {
@@ -21,6 +20,7 @@
       background: #f8f4ef;
       color: #333;
       line-height: 1.6;
+      font-family: 'Gowun Batang', serif;
     }
     section.page {
       min-height: 100vh;
@@ -43,13 +43,8 @@
       margin-bottom: 1rem;
       color: #222;
     }
-    h1 {
-      font-size: 2rem;
-      font-style: italic;
-    }
-    h2 {
-      font-size: 1.5rem;
-    }
+    h1 { font-size: 2rem; font-style: italic; }
+    h2 { font-size: 1.5rem; }
     img.photo {
       max-width: 250px;
       width: 80%;
@@ -64,7 +59,6 @@
       margin: 1rem 0;
     }
     .text-box {
-      font-family: 'Gowun Batang', serif;
       max-width: 500px;
       margin: 1rem auto;
       text-align: center;
@@ -74,41 +68,89 @@
       font-size: 0.9rem;
       color: #666;
     }
-    /* 모바일 대응 */
+    /* 반응형 */
     @media (max-width: 600px) {
       h1 { font-size: 1.6rem; }
       h2 { font-size: 1.2rem; }
       .text-box { font-size: 0.95rem; }
     }
-    /* 지도 컨테이너를 가로 100%, 세로는 가로 대비 비율로 반응형 */
-  #daumRoughmapContainer1756789529521 {
-    width: 100%;
-  height: 400px; /* 고정 높이 혹은 원하는 비율로 조정 */
-  padding: 0;    /* padding 제거 */
-  margin: 0;     /* margin 제거 */
-  position: relative;
-  }
-  
-  .root_daum_roughmap {
-    margin-bottom: 0 !important;
-    
-  }
-  .root_daum_roughmap .map_border_btm {
-    
-    padding: 0 !important;
-  }
-  .map-logos {
-    display: flex;            /* 가로로 나란히 */
-    margin-top: 10px; /* 지도와 로고 간격만 남기기 */
-    gap: 10px;                /* 로고 사이 간격 */
-    justify-content: center;  /* 가운데 정렬 */
-  }
+    #daumRoughmapContainer1756789529521 {
+      width: 100%;
+      height: 400px;
+      padding: 0;
+      margin: 0;
+      position: relative;
+    }
+    .root_daum_roughmap { margin-bottom: 0 !important; }
+    .map-logos {
+      display: flex;
+      margin-top: 10px;
+      gap: 10px;
+      justify-content: center;
+    }
+    .full-screen {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #111;
+      color: white;
+    }
+
+    /* ✅ 갤러리 영역 수정 */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      padding: 20px;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
+    /* 모달 */
+    .modal {
+      display: none; 
+      position: fixed; 
+      z-index: 1000; 
+      padding-top: 60px; 
+      left: 0;
+      top: 0;
+      width: 100%; 
+      height: 100%; 
+      overflow: auto;
+      background-color: rgba(0,0,0,0.8);
+    }
+    .modal-content {
+      margin: auto;
+      display: block;
+      max-width: 90%;
+      max-height: 80%;
+      border-radius: 12px;
+    }
+    .close {
+      position: absolute;
+      top: 20px;
+      right: 35px;
+      color: #fff;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
+  <section id="home" class="full-screen">
+    <h1>Welcome to My Page</h1>
+    <a href="#content">Scroll Down</a>
+  </section>
 
-  <!-- 첫 번째 화면 -->
-  <section class="page">
+  <section id="content" class="page">
     <h1>Joon's First Birthday</h1>
     <img src="baby-photo.jpg" alt="아기 사진" class="photo">
     <div class="text-box">
@@ -123,132 +165,37 @@
     </div>
   </section>
 
-  <!-- 두 번째 화면 -->
   <section class="page">
-    <h2>Location<br>오시는 길</h2>
-    <!-- 카카오맵 - 지도퍼가기 -->
-  <div id="daumRoughmapContainer1756789529521" class="root_daum_roughmap root_daum_roughmap_landing"></div>
-
-  <!-- 설치 스크립트 (한 번만 넣으면 됨) -->
-  <script charset="UTF-8" class="daum_roughmap_loader_script" 
-    src="https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js"></script>
-
-  <!-- 실행 스크립트 -->
-  <script charset="UTF-8">
-    new daum.roughmap.Lander({
-      "timestamp" : "1756789529521",
-      "key" : "vm4uxs62eq5",
-      "mapWidth" : "100%",   // 반응형
-      "mapHeight" : "100%"    // 높이는 원하는 값으로 조정
-    }).render();
-  </script>
-  
-  <div class="map-logos">
-    <a id="kakaoNavLink" href="javascript:startNavigation()">
-      <img src="kakao_logo.svg" alt="카카오내비" width="120">
-    </a>
-    <a id="tmapNavLink" target="_blank">
-      <img src="tmap_logo.svg" alt="T맵" width="120">
-    </a>
-  </div>
-  <script>
-  function startNavigation() {
-    Kakao.Navi.start({
-      name: '코트야드 바이메리어트 서울 판교', // 목적지
-      x: 127.112052, // 경도
-      y: 37.392797,  // 위도
-      coordType: 'wgs84',
-    });
-  }
-  </script>
-  <script>
-    const placeName = "코트야드 바이메리어트 서울 판교";
-    const x = 127.112052; // 경도
-    const y = 37.392797;  // 위도
-
-    // T맵
-    const tmapLink = `tmap://route?goalname=${encodeURIComponent(placeName)}&goalx=${x}&goaly=${y}`;
-    document.getElementById("tmapNavLink").href = tmapLink;
-  </script>
+    <h2>오시는 길</h2>
+    <div id="daumRoughmapContainer1756789529521" class="root_daum_roughmap root_daum_roughmap_landing"></div>
+    <script charset="UTF-8" class="daum_roughmap_loader_script" src="https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js"></script>
+    <script charset="UTF-8">
+      new daum.roughmap.Lander({
+        "timestamp" : "1756789529521",
+        "key" : "vm4uxs62eq5",
+        "mapWidth" : "100%",
+        "mapHeight" : "100%"
+      }).render();
+    </script>
+    <div class="map-logos">
+      <a id="kakaoNavLink" href="javascript:startNavigation()">
+        <img src="kakao_logo.svg" alt="카카오내비" width="120">
+      </a>
+      <a id="tmapNavLink" target="_blank">
+        <img src="tmap_logo.svg" alt="T맵" width="120">
+      </a>
+    </div>
   </section>
 
-</body>
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>갤러리</title>
-  <style>
-    body {
-      font-family: 'Gowun Batang', serif;
-      background-color: #fdfbf7;
-      text-align: center;
-    }
-
-    h2 {
-      margin-top: 20px;
-      color: #6b4f36;
-    }
-
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 15px;
-      padding: 20px;
-      max-width: 1000px;
-      margin: auto;
-    }
-
-    .gallery img {
-      width: 100%;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: transform 0.3s;
-    }
-
-    /* 모달 스타일 */
-    .modal {
-      display: none; 
-      position: fixed; 
-      z-index: 1000; 
-      padding-top: 60px; 
-      left: 0;
-      top: 0;
-      width: 100%; 
-      height: 100%; 
-      overflow: auto;
-      background-color: rgba(0,0,0,0.8);
-    }
-
-    .modal-content {
-      margin: auto;
-      display: block;
-      max-width: 90%;
-      max-height: 80%;
-      border-radius: 12px;
-    }
-
-    .close {
-      position: absolute;
-      top: 20px;
-      right: 35px;
-      color: #fff;
-      font-size: 40px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-  </style>
-</head>
-<body>
-
-  <h2>소중한 순간들</h2>
-
-  <div class="gallery">
-    <img src="photo1.jpg" alt="사진1">
-    <img src="photo2.jpg" alt="사진2">
-    <img src="photo3.jpg" alt="사진3">
-    <img src="photo4.jpg" alt="사진4">
-  </div>
+  <section class="page">
+    <h2>소중한 순간들</h2>
+    <div class="gallery">
+      <img src="photo1.jpg" alt="사진1">
+      <img src="photo2.jpg" alt="사진2">
+      <img src="photo3.jpg" alt="사진3">
+      <img src="photo4.jpg" alt="사진4">
+    </div>
+  </section>
 
   <!-- 모달 -->
   <div id="myModal" class="modal">
@@ -257,7 +204,22 @@
   </div>
 
   <script>
-    // 모달 열기
+    function startNavigation() {
+      Kakao.Navi.start({
+        name: '코트야드 바이메리어트 서울 판교',
+        x: 127.112052,
+        y: 37.392797,
+        coordType: 'wgs84',
+      });
+    }
+
+    const placeName = "코트야드 바이메리어트 서울 판교";
+    const x = 127.112052;
+    const y = 37.392797;
+    const tmapLink = `tmap://route?goalname=${encodeURIComponent(placeName)}&goalx=${x}&goaly=${y}`;
+    document.getElementById("tmapNavLink").href = tmapLink;
+
+    // 모달 스크립트
     const modal = document.getElementById("myModal");
     const modalImg = document.getElementById("imgInModal");
     const images = document.querySelectorAll(".gallery img");
@@ -270,19 +232,10 @@
       });
     });
 
-    // 닫기 버튼
-    closeBtn.onclick = () => {
-      modal.style.display = "none";
-    }
-
-    // 모달 바깥 클릭 시 닫기
+    closeBtn.onclick = () => { modal.style.display = "none"; }
     modal.onclick = (event) => {
-      if (event.target === modal) {
-        modal.style.display = "none";
-      }
+      if (event.target === modal) modal.style.display = "none";
     }
   </script>
-
 </body>
-
 </html>
